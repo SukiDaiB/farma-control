@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pastas que o app pode entregar a outros apps (câmera e compartilhamento) -->
+<paths>
+    <files-path name="receitas" path="receitas/" />
+    <cache-path name="camera" path="camera/" />
+</paths>

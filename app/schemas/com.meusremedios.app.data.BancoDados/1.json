@@ -1,0 +1,216 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "08af46b451be6b37c2c5db176f0b316e",
+    "entities": [
+      {
+        "tableName": "medicamentos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `dosagem` TEXT NOT NULL, `forma` TEXT NOT NULL, `quantidadePorDose` REAL NOT NULL, `estoque` REAL NOT NULL, `alertaDias` INTEGER NOT NULL, `diasSemana` INTEGER NOT NULL, `dataInicio` INTEGER NOT NULL, `dataFim` INTEGER, `observacoes` TEXT NOT NULL, `ativo` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dosagem",
+            "columnName": "dosagem",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "forma",
+            "columnName": "forma",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantidadePorDose",
+            "columnName": "quantidadePorDose",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estoque",
+            "columnName": "estoque",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alertaDias",
+            "columnName": "alertaDias",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diasSemana",
+            "columnName": "diasSemana",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataInicio",
+            "columnName": "dataInicio",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataFim",
+            "columnName": "dataFim",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "observacoes",
+            "columnName": "observacoes",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ativo",
+            "columnName": "ativo",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "horarios",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `medicamentoId` INTEGER NOT NULL, `hora` INTEGER NOT NULL, FOREIGN KEY(`medicamentoId`) REFERENCES `medicamentos`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicamentoId",
+            "columnName": "medicamentoId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hora",
+            "columnName": "hora",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_horarios_medicamentoId",
+            "unique": false,
+            "columnNames": [
+              "medicamentoId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_horarios_medicamentoId` ON `${TABLE_NAME}` (`medicamentoId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medicamentos",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicamentoId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "registros_dose",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `medicamentoId` INTEGER NOT NULL, `previsto` TEXT NOT NULL, `realizado` TEXT, `status` TEXT NOT NULL, FOREIGN KEY(`medicamentoId`) REFERENCES `medicamentos`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicamentoId",
+            "columnName": "medicamentoId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "previsto",
+            "columnName": "previsto",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "realizado",
+            "columnName": "realizado",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_registros_dose_medicamentoId_previsto",
+            "unique": true,
+            "columnNames": [
+              "medicamentoId",
+              "previsto"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_registros_dose_medicamentoId_previsto` ON `${TABLE_NAME}` (`medicamentoId`, `previsto`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medicamentos",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicamentoId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '08af46b451be6b37c2c5db176f0b316e')"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cápsula monocromática para a barra de status -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group
+        android:pivotX="12"
+        android:pivotY="12"
+        android:rotation="-45">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12,8 L8,8 A4,4 0 0,0 8,16 L12,16 Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12.6,8 L16,8 A4,4 0 0,1 16,16 L12.6,16 Z" />
+    </group>
+</vector>
